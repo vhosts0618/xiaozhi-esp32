@@ -1,0 +1,29 @@
+name: Build AI04 (Turkish)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ai04-turkce
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:release-v6.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build davinci/ai04-c3 (tr-TR)
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          source "$IDF_PATH/export.sh"
+          python scripts/build.py davinci/ai04-c3 --name davinci-ai04-c3 --language tr-TR --wake-word disabled
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai04-turkce
+          path: build/merged-binary.bin
+          if-no-files-found: error

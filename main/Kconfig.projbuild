@@ -185,6 +185,9 @@ choice BOARD_TYPE
     config BOARD_TYPE_CHD_ESP32S3_EYE
         bool "CHD ESP32-S3-EYE (虫洞)"
         depends on IDF_TARGET_ESP32S3
+    config BOARD_TYPE_DAVINCI_AI04_C3
+        bool "Davinci AI04 C3"
+        depends on IDF_TARGET_ESP32C3
     config BOARD_TYPE_DF_S3_AI_CAM
         bool "DFRobot ESP32-S3 AI Camera Module"
         depends on IDF_TARGET_ESP32S3
