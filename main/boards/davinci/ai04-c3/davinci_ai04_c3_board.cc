@@ -11,6 +11,7 @@
 
 #include <esp_log.h>
 #include <esp_sleep.h>
+#include <esp_mac.h>
 #include <driver/gpio.h>
 #include <driver/i2c_master.h>
 #include <freertos/FreeRTOS.h>
@@ -32,8 +33,22 @@ static void Ai04HoldPower() {
     gpio_set_level(AUX_ENABLE_GPIO, 1);
 }
 
-__attribute__((constructor)) static void Ai04EarlyPowerHold() {
+// The factory firmware already registered this device's MAC with the cloud
+// server under another account. Use a locally administered MAC derived from
+// the eFuse MAC so the device can be activated as a new device.
+static void Ai04UseOwnMac() {
+    uint8_t mac[6];
+    if (esp_efuse_mac_get_default(mac) != ESP_OK) {
+        return;
+    }
+    mac[0] |= 0x02;   // locally administered
+    mac[0] &= ~0x01;  // unicast
+    esp_base_mac_addr_set(mac);
+}
+
+__attribute__((constructor)) static void Ai04EarlyInit() {
     Ai04HoldPower();
+    Ai04UseOwnMac();
 }
 
 class Ai04Board : public WifiBoard {
