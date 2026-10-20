@@ -1,10 +1,10 @@
 {
     "manufacturer": "davinci",
-    "type": "davinci-ai04-c3",
+    "type": "ai04-c3-tr",
     "target": "esp32c3",
     "builds": [
         {
-            "name": "davinci-ai04-c3",
+            "name": "ai04-c3-tr",
             "sdkconfig_append": [
                 "CONFIG_PM_ENABLE=y",
                 "CONFIG_FREERTOS_USE_TICKLESS_IDLE=y",

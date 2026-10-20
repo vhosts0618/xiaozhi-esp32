@@ -21,7 +21,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           source "$IDF_PATH/export.sh"
-          python scripts/build.py davinci/ai04-c3 --name davinci-ai04-c3 --language tr-TR --wake-word disabled
+          python scripts/build.py davinci/ai04-c3 --name ai04-c3-tr --language tr-TR --wake-word disabled
       - uses: actions/upload-artifact@v4
         with:
           name: ai04-turkce
