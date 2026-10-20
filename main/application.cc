@@ -503,7 +503,15 @@ void Application::CheckNewVersion() {
         retry_count = 0;
         retry_delay = 10;  // Reset retry delay
 
+#ifdef CONFIG_DISABLE_AUTO_FIRMWARE_UPGRADE
         if (ota_->HasNewVersion()) {
+            ESP_LOGW(TAG, "Automatic firmware upgrade disabled, ignoring version %s",
+                     ota_->GetFirmwareVersion().c_str());
+        }
+        if (false) {
+#else
+        if (ota_->HasNewVersion()) {
+#endif
             if (UpgradeFirmware(ota_->GetFirmwareUrl(), ota_->GetFirmwareVersion())) {
                 return;  // This line will never be reached after reboot
             }

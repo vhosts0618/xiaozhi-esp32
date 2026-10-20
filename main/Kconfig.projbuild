@@ -6,6 +6,13 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+config DISABLE_AUTO_FIRMWARE_UPGRADE
+    bool "Disable automatic firmware upgrade"
+    default n
+    help
+        Ignore firmware updates offered by the OTA server. Activation and server
+        configuration still work. Use for custom builds that must not be replaced.
+
 choice
     prompt "Flash Assets"
     default FLASH_DEFAULT_ASSETS if !USE_EMOTE_MESSAGE_STYLE
